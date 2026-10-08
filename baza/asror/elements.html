@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="uz">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <title>Asror elementlari (ai_reel_montaj)</title>
+    <script src="assets/vendor/gsap.min.js"></script>
+    <style>
+      /* ===== Asror Iskandarov uslubi — asosiy elementlar (PASSPORT.md 5-bo'lim). Hamma tween'lar smooth-motion standartida. ===== */
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-200.ttf"); font-weight: 200; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-200i.ttf"); font-weight: 200; font-style: italic; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-300.ttf"); font-weight: 300; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-300i.ttf"); font-weight: 300; font-style: italic; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-400.ttf"); font-weight: 400; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-400i.ttf"); font-weight: 400; font-style: italic; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-500.ttf"); font-weight: 500; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-600.ttf"); font-weight: 600; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-600i.ttf"); font-weight: 600; font-style: italic; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-700.ttf"); font-weight: 700; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-700i.ttf"); font-weight: 700; font-style: italic; }
+      @font-face { font-family: "P"; src: url("assets/fonts/Poppins-800.ttf"); font-weight: 800; }
+      @font-face { font-family: "IT"; src: url("assets/fonts/InterTight-800.ttf"); font-weight: 800; }
+      :root { --w: #fff; --dim: rgba(255,255,255,.45); --blue: #2b6bff; --ink: #111;
+        --glass: rgba(255,255,255,.12); --gline: rgba(255,255,255,.38); }
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+      #root { position: relative; width: 100%; height: 100%; overflow: hidden; background: #000; font-family: "P"; color: var(--w); }
+      .full { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+      .shadow { text-shadow: 0 2px 14px rgba(0,0,0,.35); }
+
+      /* 1) huk: 3 darajali sarlavha (R17 — raqam bilan). ▶ ikonli varianti (R1, chap-tepa x 8 %, y 10–32 %) — PASSPORT 5a */
+      #huk { position: absolute; left: 270px; top: 1330px; } /* R17: x 25 %, y 70–80 % */
+      #huk .l1 { font-size: 84px; font-weight: 600; line-height: 1.0; letter-spacing: -0.04em; }
+      #huk .l0 { font-size: 54px; font-weight: 400; font-style: italic; letter-spacing: -0.03em; line-height: 1.1; }
+      #huk .l3 { font-size: 48px; font-weight: 400; font-style: italic; letter-spacing: -0.03em; margin-left: 365px; line-height: 1.1; }
+      .w { display: inline-block; margin-right: .22em; }
+
+      /* 2) metall gradient raqam (R1/R17) */
+      #num { position: absolute; left: 0; right: 0; top: 20px; text-align: center; font-weight: 800; font-size: 560px; line-height: .78;
+        letter-spacing: -0.06em; /* R17: x 9–90 %, y 9–45 % */ color: rgba(255,255,255,.01);
+        background: linear-gradient(180deg, #ffffff 0%, #ececec 40%, rgba(170,170,170,.55) 70%, rgba(150,150,150,0) 96%); -webkit-background-clip: text; background-clip: text;
+        -webkit-text-fill-color: transparent; filter: drop-shadow(0 10px 24px rgba(0,0,0,.35)); }
+
+      /* 3) shisha ro'yxat-skroller (R1) */
+      #list { position: absolute; left: 160px; width: 740px; top: 150px; height: 640px; /* R1: x 15–83 %, y 10–40 % */ overflow: hidden;
+        -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 70px, #000 560px, transparent 640px); }
+      #rows { position: absolute; left: 0; top: 80px; width: 100%; }
+      .row { height: 130px; display: flex; align-items: center; gap: 22px; padding: 0 18px; position: relative; }
+      .row::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 6px; height: 2px;
+        background: linear-gradient(90deg, rgba(255,255,255,.85), rgba(255,255,255,.25)); box-shadow: 0 0 10px rgba(255,255,255,.7); }
+      .row .pi { width: 100px; height: 100px; border-radius: 50%; background: rgba(255,255,255,.92); display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 0 18px rgba(255,255,255,.65); flex: none; }
+      .row .pi i { border-left: 30px solid #333; border-top: 18px solid transparent; border-bottom: 18px solid transparent; margin-left: 8px; }
+      .row .t { flex: 1; font-size: 34px; font-weight: 400; letter-spacing: -0.02em; }
+      .row .n { font-size: 44px; font-weight: 500; }
+
+      /* 4) [ qavsli ] subtitr (asosiy) */
+      .sub { position: absolute; left: 80px; right: 80px; text-align: center; font-size: 36px; font-weight: 300; letter-spacing: -0.01em; } /* y 53–64 %, Poppins 300 */
+
+      /* 5) split + oq pill (R2/R3/R4) */
+      #split { position: absolute; inset: 0; opacity: 0; }
+      #stop { position: absolute; left: 0; top: 0; width: 1080px; height: 960px; overflow: hidden; }
+      #stop video { position: absolute; left: -108px; top: -200px; width: 1296px; height: 2304px; object-fit: cover; }
+      #sbot { position: absolute; left: 0; top: 966px; width: 1080px; height: 954px; overflow: hidden; }
+      #sbot video { position: absolute; left: 0; top: -480px; width: 1080px; height: 1920px; object-fit: cover; }
+      #seamline { position: absolute; left: 0; right: 0; top: 960px; height: 6px; background: #fff; }
+      .pill { position: absolute; left: 50%; transform: translateX(-50%); background: #fff; color: var(--ink); border-radius: 14px;
+        padding: 12px 28px 14px; font-family: "IT"; font-weight: 800; font-size: 48px; line-height: 1.08; text-align: center; text-transform: uppercase;
+        letter-spacing: -0.01em; box-shadow: 0 8px 24px rgba(0,0,0,.25); white-space: nowrap; }
+
+      /* 6) "#1 / qaror" blok (R15/R14) */
+      #nb { position: absolute; left: 108px; top: 990px; line-height: .86; } /* R14: x 10 %, y 52–72 % */
+      #nb .a { font-size: 230px; font-weight: 700; letter-spacing: -0.05em; }
+      #nb .b { font-size: 120px; font-weight: 600; font-style: italic; letter-spacing: -0.05em; }
+      #nb .c { font-size: 30px; font-weight: 400; word-spacing: .3em; margin-top: 14px; }
+
+      /* 7) italic bob so'zi + izoh (R3/R8/R9) */
+      #it { position: absolute; left: 520px; top: 1040px; }
+      #it .a { font-size: 120px; font-weight: 700; font-style: italic; letter-spacing: -0.02em; color: #f3efe6; }
+      #it .b { font-size: 34px; font-weight: 500; word-spacing: .35em; margin-top: 4px; }
+
+      /* 8) shisha progress bar (R3/R8/R12) */
+      #pb { position: absolute; left: 200px; width: 680px; top: 1420px; height: 64px; border-radius: 32px; background: var(--glass);
+        border: 1.5px solid var(--gline); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+        box-shadow: inset 0 0 18px rgba(255,255,255,.18), 0 0 26px rgba(80,150,255,.35); }
+      #pbf { position: absolute; left: 10px; top: 10px; bottom: 10px; width: 400px; transform-origin: 0 50%; transform: scaleX(0); border-radius: 22px;
+        background: linear-gradient(90deg, rgba(120,180,255,.2), #bfe0ff); box-shadow: 0 0 18px #7fb8ff; }
+      #pbn { position: absolute; right: 26px; top: 10px; font-size: 32px; font-weight: 600; }
+
+      /* 9) Like pufakchasi (R3/R8) */
+      #like { position: absolute; left: 700px; top: 1120px; width: 170px; height: 150px; }
+      #like .bb { position: absolute; inset: 0 0 26px 0; background: #fff; border-radius: 34px; display: flex; align-items: center; justify-content: center;
+        box-shadow: 0 10px 30px rgba(0,0,0,.25); }
+      #like .bb::after { content: ""; position: absolute; left: 50%; bottom: -20px; margin-left: -18px; border: 18px solid transparent; border-top-color: #fff; border-bottom: 0; }
+      #like svg { width: 82px; height: 82px; }
+      #like .lt { position: absolute; left: 112px; top: 140px; font-size: 30px; font-style: italic; font-weight: 500; }
+
+      /* 10) shisha IG profil kartasi + kursor (R1/R5) */
+      #prof { position: absolute; left: 90px; width: 900px; top: 1330px; height: 400px; border-radius: 40px; background: rgba(20,24,32,.42);
+        border: 1.5px solid var(--gline); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); padding: 36px 40px; }
+      #prof .av { position: absolute; left: 40px; top: 36px; width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg,#d7d7d7,#7c7c7c); border: 3px solid #fff; }
+      #prof .h { position: absolute; left: 190px; top: 46px; font-size: 38px; font-weight: 600; }
+      #prof .s { position: absolute; left: 190px; top: 100px; font-size: 26px; opacity: .85; word-spacing: .4em; }
+      #prof .btn { position: absolute; top: 200px; height: 74px; border-radius: 16px; font-size: 30px; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+      #prof .f { left: 40px; width: 400px; background: #3d7bff; }
+      #prof .m { left: 460px; width: 400px; background: rgba(255,255,255,.16); }
+      #prof .dots { position: absolute; left: 40px; top: 300px; display: flex; gap: 22px; }
+      #prof .dots i { width: 70px; height: 70px; border-radius: 50%; border: 2px solid rgba(255,255,255,.6); background: rgba(255,255,255,.12); }
+      #cur { position: absolute; left: 300px; top: 1560px; width: 70px; }
+
+      /* echo-nusxa (R17): raqam orqasida pastroqda xira takror */
+      #numecho { position: absolute; left: 0; right: 0; top: 170px; text-align: center; font-weight: 800; font-size: 560px; line-height: .78;
+        letter-spacing: -0.06em; color: rgba(255,255,255,.01); background: linear-gradient(180deg, rgba(220,220,220,.45) 0%, rgba(200,200,200,0) 80%);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+      /* 11) "#N - qoida" + kalit so'z + [subtitr] bloki (R17): chap-past, typewriter, kesimlardan o'tadi */
+      #qb { position: absolute; left: 44px; top: 1420px; }
+      #qb .n { font-size: 30px; font-weight: 700; font-style: italic; }
+      #qb .n i { font-style: normal; font-weight: 300; font-size: 20px; margin-left: 6px; }
+      #qb .k { font-size: 44px; font-weight: 600; letter-spacing: -0.02em; margin-top: 2px; }
+      #qb .k span.s { font-size: 20px; font-weight: 300; margin-left: 14px; letter-spacing: 0; }
+      .ch { opacity: 0; }
+      /* 12) IG shisha teg + punktir callout (R16) */
+      #igtag { position: absolute; left: 40px; top: 1250px; height: 92px; padding: 0 34px 0 24px; border-radius: 22px; display: flex; align-items: center; gap: 16px;
+        background: rgba(255,255,255,.12); border: 1.5px solid rgba(255,255,255,.5); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+        box-shadow: inset 0 0 22px rgba(170,230,255,.35), 0 0 30px rgba(140,220,255,.25); font-size: 36px; font-weight: 500; }
+      #igtag svg { width: 46px; height: 46px; }
+      #callout { position: absolute; left: 1000px; top: 600px; width: 2px; height: 696px; border-left: 2px dashed rgba(255,255,255,.75); transform-origin: 50% 100%; }
+      #callh { position: absolute; left: 380px; top: 1296px; width: 620px; height: 2px; border-top: 2px dashed rgba(255,255,255,.75); transform-origin: 0 50%; }
+      #h4 { position: absolute; left: 480px; top: 140px; text-align: right; width: 520px; }
+      #h4 .a { font-size: 120px; font-weight: 600; font-style: italic; letter-spacing: -0.03em; line-height: .95; }
+      #h4 .b { font-size: 40px; font-weight: 300; line-height: 1; }
+      #h4 .c { font-size: 110px; font-weight: 700; letter-spacing: -0.04em; line-height: .95; }
+      #h4 .d { font-size: 36px; font-weight: 300; font-style: italic; }
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="22" data-width="1080" data-height="1920">
+      <!-- spiker (yakuniy montajda: foydalanuvchi videosi, virtual kameralar) -->
+      <video id="vmain" class="clip full" src="assets/src.mp4" data-start="0" data-duration="22" data-track-index="0" muted playsinline></video>
+
+      <!-- 0–3.4 s: huk sarlavha + metall raqam -->
+      <div id="huk" class="clip shadow" data-start="0" data-duration="3.4" data-track-index="1">
+                <div class="l0"><span class="w">Yoshimdagi</span></div>
+        <div class="l1"><span class="w">20</span><span class="w">ta</span><span class="w">Oltin</span></div>
+        <div class="l3"><span class="w">qoidam.</span></div>
+      </div>
+      <div id="num" class="clip" data-start="0" data-duration="3.4" data-track-index="2">20</div>
+      
+
+      <!-- 3.4–7 s: shisha ro'yxat-skroller -->
+      <div id="list" class="clip" data-start="3.4" data-duration="3.6" data-track-index="4">
+        <div id="rows">
+          <div class="row"><div class="pi"><i></i></div><div class="t">Kameraga gapirish</div><div class="n">1</div></div>
+          <div class="row"><div class="pi"><i></i></div><div class="t">Before – After</div><div class="n">2</div></div>
+          <div class="row"><div class="pi"><i></i></div><div class="t">Kommentga javob berish</div><div class="n">3</div></div>
+          <div class="row"><div class="pi"><i></i></div><div class="t">Storytelling qilish</div><div class="n">4</div></div>
+          <div class="row"><div class="pi"><i></i></div><div class="t">Doskada yozib tushuntirish</div><div class="n">5</div></div>
+        </div>
+      </div>
+      <div id="sub1" class="sub clip shadow" style="top:1250px" data-start="3.4" data-duration="3.6" data-track-index="5">[ kontent formatlari ]</div>
+
+      <!-- 7–10 s: split + oq pill -->
+      <div id="split">
+        <div id="stop" data-layout-allow-overflow><video id="vtop" class="clip" src="assets/src.mp4" data-start="7" data-duration="3" data-track-index="6" muted playsinline></video></div>
+        <div id="sbot" data-layout-allow-overflow><video id="vbot" class="clip" src="assets/broll.mp4" data-start="7" data-duration="3" data-track-index="7" muted playsinline></video></div>
+        <div id="seamline"></div>
+      </div>
+      <div id="pill" class="pill clip" style="top:1010px" data-start="7" data-duration="3" data-track-index="8">Taslim bo‘lishga<br />shoshilmang</div>
+      <div id="sub2" class="sub clip shadow" style="top:890px" data-start="7" data-duration="3" data-track-index="9">[ 2020-yil karantin bo‘ldi ]</div>
+
+      <!-- 10–13 s: "#1 qaror" + italic so'z + progress bar -->
+      <div id="nb" class="clip shadow" data-start="10" data-duration="3" data-track-index="10"><div class="a">3</div><div class="b">sabab</div><div class="c">tufayli sota olmaysiz</div></div>
+      <div id="it" class="clip shadow" data-start="10" data-duration="3" data-track-index="11"><div class="a">Bilgan.</div><div class="b">narsalarimni birlashtirib</div></div>
+      <div id="pb" class="clip" data-start="10" data-duration="3" data-track-index="12"><div id="pbf"></div><div id="pbn">60</div></div>
+
+      <!-- 13–16 s: CTA — Like + IG profil kartasi + kursor -->
+      <div id="like" class="clip" data-start="13" data-duration="3" data-track-index="13">
+        <div class="bb"><svg viewBox="0 0 24 24"><path fill="#ff2a3d" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.6 1.2 4.4 2.6h2.4C14 6.2 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg></div>
+        <div class="lt">Like</div>
+      </div>
+      <div id="prof" class="clip" data-start="13" data-duration="3" data-track-index="14">
+        <div class="av"></div><div class="h">foydalanuvchi.handle</div><div class="s">135 posts 764K followers 363 following</div>
+        <div class="btn f" id="fbtn"><span id="fa">Follow</span><span id="fb" style="position:absolute;opacity:0">Following</span></div><div class="btn m">Message</div>
+        <div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <svg id="cur" class="clip" data-start="13" data-duration="3" data-track-index="15" viewBox="0 0 24 28"><path fill="#fff" stroke="#111" stroke-width="1.2" d="M8 1.5c1 0 1.8.8 1.8 1.8V12l1-.2c.9 0 1.6.6 1.8 1.4l.9-.2c.9 0 1.6.6 1.8 1.4l.8-.1c1 0 1.9.8 1.9 1.8v5.4c0 3-2.4 5.5-5.4 5.5H10c-1.7 0-3.2-.8-4.2-2.1L1.6 18.8c-.6-.8-.4-1.9.4-2.4.7-.5 1.7-.4 2.3.2L6.2 18V3.3c0-1 .8-1.8 1.8-1.8z"/></svg>
+
+      <div id="numecho" class="clip" data-start="0" data-duration="3.4" data-track-index="16">20</div>
+      <!-- 16–19 s: R17 qoida bloki (typewriter, kesimdan o'tadi) -->
+      <div id="qb" class="clip shadow" data-start="16" data-duration="3" data-track-index="17">
+        <div class="n" id="qbn">#7<i>- qoida</i></div>
+        <div class="k" id="qbk">Hayotimda<span class="s" id="qbs">[ har kuni o‘qish ]</span></div>
+      </div>
+      <!-- 19–22 s: R16 4 darajali huk + IG shisha teg callout -->
+      <div id="h4" class="clip shadow" data-start="19" data-duration="3" data-track-index="18">
+        <div class="a w4">Shu</div><div class="b w4">yilini</div><div class="c w4">oxiri</div><div class="d w4">gacha</div>
+      </div>
+      <div id="callout" class="clip" data-start="19" data-duration="3" data-track-index="19"></div>
+      <div id="callh" class="clip" data-start="19" data-duration="3" data-track-index="20"></div>
+      <div id="igtag" class="clip" data-start="19" data-duration="3" data-track-index="21"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.3" cy="6.7" r="1" fill="#fff"/></svg>Instagram</div>
+    </div>
+    <script>
+      const tl = gsap.timeline({ paused: true });
+      tl.to({}, { duration: 22 }, 0);
+      const IN = { opacity: 1, y: 0, x: 0, scale: 1, filter: "blur(0px)", ease: "expo.out" };
+      const OUT = { opacity: 0, filter: "blur(8px)", duration: 0.5, ease: "power2.inOut" };
+      tl.set(["#huk .w", "#num", "#list", ".row", "#sub1", "#pill", "#sub2", "#nb", "#it", "#pb", "#like", "#prof", "#cur"], { opacity: 0 }, 0);
+
+      // 1) huk: ikon -> so'zma-so'z (blur -> aniq, joyida)
+            document.querySelectorAll("#huk .w").forEach((w, i) => {
+        tl.fromTo(w, { opacity: 0, y: 12, filter: "blur(8px)" }, { ...IN, duration: 0.5 }, 0.45 + i * 0.3);
+      });
+      // 2) metall raqam pastdan o'sadi + qopqoq so'z
+      tl.fromTo("#num", { opacity: 0, scale: 0.94, filter: "blur(10px)" }, { ...IN, duration: 0.7 }, 0.1);
+      tl.to(["#huk", "#num"], OUT, 2.85);
+
+      // 3) ro'yxat: qatorlar pastdan qo'shiladi, lenta yuqoriga suriladi (5 qatordan 4tasi ko'rinadi)
+      tl.fromTo("#list", { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.inOut" }, 3.4);
+      document.querySelectorAll(".row").forEach((r, i) => {
+        const t = 3.55 + i * 0.6;
+        tl.fromTo(r, { opacity: 0, y: 24, filter: "blur(6px)" }, { ...IN, duration: 0.5 }, t);
+        if (i >= 3) tl.to("#rows", { y: -(i - 2) * 92, duration: 0.6, ease: "power2.inOut" }, t - 0.05);
+      });
+      tl.fromTo("#sub1", { opacity: 0, filter: "blur(6px)" }, { ...IN, duration: 0.45 }, 3.6);
+      tl.to(["#list", "#sub1"], OUT, 6.45);
+
+      // 5) split (hard cut) + oq pill
+      tl.set("#split", { opacity: 1 }, 7);
+      tl.set("#split", { opacity: 0 }, 10);
+      tl.fromTo("#pill", { opacity: 0, scale: 0.92, filter: "blur(8px)" }, { ...IN, duration: 0.55 }, 7.15);
+      tl.fromTo("#sub2", { opacity: 0, filter: "blur(6px)" }, { ...IN, duration: 0.45 }, 7.4);
+      tl.to(["#pill", "#sub2"], OUT, 9.45);
+
+      // 6) #1 qaror, 7) italic so'z, 8) progress bar
+      tl.fromTo("#nb", { opacity: 0, y: 26, filter: "blur(12px)" }, { ...IN, duration: 0.6 }, 10.1);
+      tl.fromTo("#it", { opacity: 0, y: 20, filter: "blur(8px)" }, { ...IN, duration: 0.55 }, 10.5);
+      tl.fromTo("#pb", { opacity: 0, y: 20, filter: "blur(8px)" }, { ...IN, duration: 0.55 }, 10.8);
+      tl.fromTo("#pbf", { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: "power1.inOut" }, 11.1);
+      tl.to(["#nb", "#it", "#pb"], OUT, 12.45);
+
+      // 9) Like, 10) profil kartasi + kursor Follow
+      tl.fromTo("#like", { opacity: 0, scale: 0.9, filter: "blur(8px)" }, { ...IN, duration: 0.5 }, 13.05);
+      tl.to("#like", { opacity: 0, filter: "blur(8px)", duration: 0.45, ease: "power2.inOut" }, 13.9);
+      tl.fromTo("#prof", { opacity: 0, y: 60, filter: "blur(10px)" }, { ...IN, duration: 0.6 }, 14.0);
+      tl.fromTo("#cur", { opacity: 0, x: 120, y: 80 }, { opacity: 1, x: 0, y: 0, duration: 0.8, ease: "power2.inOut" }, 14.3);
+      tl.to("#cur", { scale: 0.9, duration: 0.15, ease: "power2.inOut" }, 15.1);
+      tl.to("#cur", { scale: 1, duration: 0.2, ease: "power2.inOut" }, 15.25);
+      tl.to("#fbtn", { backgroundColor: "rgba(255,255,255,.18)", duration: 0.25, ease: "power2.inOut" }, 15.15);
+      tl.to("#fa", { opacity: 0, duration: 0.4, ease: "power2.inOut" }, 15.15);
+      tl.to("#fb", { opacity: 1, duration: 0.4, ease: "power2.inOut" }, 15.2);
+      tl.to(["#prof", "#cur"], OUT, 15.45);
+
+      // echo raqam
+      tl.set("#numecho", { opacity: 0 }, 0);
+      tl.fromTo("#numecho", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "expo.out" }, 0.25);
+      tl.to("#numecho", OUT, 2.85);
+      // 11) qoida bloki — typewriter (harf ~0.05 s), subtitr keyin; chiqish blur 0.5 s
+      function wrap(el) { const t = el.firstChild.textContent; el.firstChild.textContent = "";
+        const f = document.createDocumentFragment(); [...t].forEach(c => { const sp = document.createElement("span"); sp.className = "ch"; sp.textContent = c; f.appendChild(sp); });
+        el.insertBefore(f, el.firstChild); }
+      wrap(document.getElementById("qbn")); wrap(document.getElementById("qbk"));
+      tl.set(["#qb", "#qbs", "#qbn i"], { opacity: 0 }, 0);
+      tl.set("#qb", { opacity: 1 }, 16);
+      document.querySelectorAll("#qbn .ch").forEach((c, i) => tl.to(c, { opacity: 1, duration: 0.12, ease: "power1.out" }, 16.1 + i * 0.05));
+      tl.to("#qbn i", { opacity: 1, duration: 0.3, ease: "power2.out" }, 16.25);
+      document.querySelectorAll("#qbk .ch").forEach((c, i) => tl.to(c, { opacity: 1, duration: 0.12, ease: "power1.out" }, 16.4 + i * 0.05));
+      tl.fromTo("#qbs", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" }, 17.0);
+      tl.to("#qb", OUT, 18.45);
+      // 12) R16: so'zma-so'z o'ngdan siljish + IG teg chapdan + punktir callout chiziladi
+      tl.set(["#h4 .w4", "#igtag", "#callout", "#callh"], { opacity: 0 }, 0);
+      document.querySelectorAll("#h4 .w4").forEach((w, i) => tl.fromTo(w, { opacity: 0, x: 60, filter: "blur(8px)" }, { ...IN, duration: 0.5 }, 19.05 + i * 0.25));
+      tl.fromTo("#igtag", { opacity: 0, x: -80, filter: "blur(8px)" }, { ...IN, duration: 0.55 }, 19.5);
+      tl.fromTo("#callh", { opacity: 1, scaleX: 0 }, { scaleX: 1, duration: 0.5, ease: "power2.inOut" }, 19.9);
+      tl.fromTo("#callout", { opacity: 1, scaleY: 0 }, { scaleY: 1, duration: 0.6, ease: "power2.inOut" }, 20.35);
+      tl.to(["#h4", "#igtag", "#callout", "#callh"], OUT, 21.45);
+
+      window.__timelines = window.__timelines || {};
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>
